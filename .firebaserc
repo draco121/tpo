@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "test-4bf63": {
+      "hosting": {
+        "tpo-jec": [
+          "test-4bf63"
+        ]
+      }
+    }
+  }
+}
