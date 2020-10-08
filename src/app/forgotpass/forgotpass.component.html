@@ -1,48 +1,61 @@
 <app-header></app-header>
-<br>
-<br>
+<br />
+<br />
 <div class="container">
   <div class="row">
-    <div class="col-lg-8 col-md-8 col-sm-12 card" style="margin: auto auto;">
+    <div class="col-lg-8 col-md-8 col-sm-12 card" style="margin: auto auto">
       <h3 class="text-center">Set Password</h3>
-      <div class="text-center card" *ngIf='alert'>
-        <p style="color: red;">{{alert}}</p>
+
+      <div class="text-center card" *ngIf="alert">
+        <p style="color: red">{{ alert }}</p>
       </div>
+
       <div class="row">
         <div class="col">
           <div class="form-group">
             <label for="phoneno">registered Phone Nnumber</label>
+
             <div class="form-inline">
-              <input type="text" class="form-control" id="phoneno" placeholder="Registered Phone Number"
-                [(ngModel)]='phoneno'>
-              <button class="btn btn-success" style="margin-left: 10px;" (click)='sendotp()'>Send OTP</button>
-              <i class="fa fa-check" aria-hidden="true" *ngIf='isotpsent' style="color: green;margin: auto;"></i>
+              <input type="text" class="form-control" id="phoneno" placeholder="+911234567890"
+                [(ngModel)]="phoneno" />
+              <button class="btn btn-success" style="margin-left: 10px" (click)="sendotp()" id="otpbtn">
+                Send OTP
+              </button>
+              <i class="fa fa-check" aria-hidden="true" *ngIf="isotpsent" style="color: green; margin: auto"></i>
             </div>
           </div>
-          <div class="form-group" *ngIf='isotpsent'>
+
+          <div class="form-group" *ngIf="isotpsent">
             <div class="form-inline">
-              <input type="text" class="form-control" placeholder="Verify OTP" [(ngModel)]='code'>
-              <button class="btn btn-success" style="margin-left: 10px;" (click)='verifyotp()'>verify</button>
-              <i class="fa fa-check" aria-hidden="true" *ngIf='isotpverified' style="color: green;margin: auto;"></i>
+              <input type="text" class="form-control" placeholder="Verify OTP" [(ngModel)]="code" />
+              <button class="btn btn-success" style="margin-left: 10px" (click)="verifyotp()">
+                verify
+              </button>
+              <i class="fa fa-check" aria-hidden="true" *ngIf="isotpverified" style="color: green; margin: auto"></i>
             </div>
           </div>
-          <form [formGroup]='passwordform' (ngSubmit)='setpassword()'>
+
+          <form [formGroup]="passwordform" (ngSubmit)="setpassword()">
             <div class="form-group">
               <label for="rollno">Enrollment Number</label>
-              <input type="text" class="form-control" id="rollno" formControlName='rollno'
-                placeholder="Enrollment Number">
+              <input type="text" class="form-control" id="rollno" formControlName="rollno"
+                placeholder="Enrollment Number" />
             </div>
+
             <div class="form-group">
               <label for="password">new password</label>
-              <input type="password" class="form-control" id="password" formControlName='password'
-                placeholder="new password">
+              <input type="password" class="form-control" id="password" formControlName="password"
+                placeholder="new password" />
             </div>
-            <button type="submit" [disabled]='validateform()' class="btn btn-primary">submit</button>
+
+            <button type="submit" [disabled]="validateform()" class="btn btn-primary">
+              submit
+            </button>
           </form>
         </div>
+
         <div style="max-width: 1px; background-color: green"></div>
       </div>
     </div>
   </div>
 </div>
-<div id='recaptcha'></div>

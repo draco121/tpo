@@ -11,7 +11,6 @@ import { UpdatesComponent } from './updates/updates.component';
 import { StudentloginComponent } from './studentlogin/studentlogin.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
-import { MainformComponent } from './mainform/mainform.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { HeaderComponent } from './header/header.component';
@@ -32,7 +31,6 @@ import { AuthGuard } from './auth.guard';
     StudentloginComponent,
     RegisterComponent,
     ForgotpassComponent,
-    MainformComponent,
     DashboardComponent,
     ChangepasswordComponent,
     HeaderComponent

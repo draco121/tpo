@@ -1,10 +1,11 @@
 import { ThrowStmt } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { environment } from 'src/environments/environment';
-import { isNull } from 'util';
 
 @Component({
   selector: 'app-forgotpass',
@@ -20,11 +21,19 @@ export class ForgotpassComponent implements OnInit,AfterViewInit {
   confirmationResult:any;
   appVerifier :any
   alert: any;
-  constructor(private fb: FormBuilder,private afa: AngularFireAuth ) {
-
+  db: CollectionReference;
+  recordpresent: boolean =false;
+  docid: string;
+  constructor(private fb: FormBuilder,
+    private afa: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router ) {
+    this.db = afs.collection('student').ref
   }
   ngAfterViewInit(): void {
-    window['recaptcha'] = new firebase.auth.RecaptchaVerifier('recaptcha');
+    window['recaptcha'] = new firebase.auth.RecaptchaVerifier('otpbtn',{
+      size :'invisible'
+    });
   }
   passwordform = this.fb.group({
     rollno: ['',Validators.required],
@@ -52,10 +61,10 @@ export class ForgotpassComponent implements OnInit,AfterViewInit {
     confirmationResult.confirm(this.code).then((result)=> {
       // User signed in successfully.
       this.isotpverified = true;
-      console.log(result)
       // ...
-    }).catch(function (error) {
-      console.log(error)
+    }).catch(error=> {
+
+      this.alert = 'bad verification code'
       // User couldn't sign in (bad verification code?)
       // ...
     });
@@ -71,6 +80,24 @@ export class ForgotpassComponent implements OnInit,AfterViewInit {
   }
 
   setpassword() {
+    this.db.doc(this.passwordform.value.rollno).get()
+    .then(doc=>{
+      if(doc.exists && doc.data().phoneno == this.phoneno){
+        this.db.doc(doc.id).update({
+          password : this.passwordform.value.password
+        }).then(result =>{
+          console.log(result);
+          window.alert('password changed successfuly')
+          this.router.navigate(['studentlogin'])
+        }).catch(err=>{
+          this.alert = "error updating the password"
+        })
+      }else{
+        this.alert = "no record found with this enrollment number and registered phone number";
+      }
+    }).catch(err=>{
+      this.alert = "unknown error occured";
+    })
 
   }
 

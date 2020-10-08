@@ -1,15 +1,12 @@
-import { registerLocaleData } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { auth } from 'firebase';
 import { AboutusComponent } from './aboutus/aboutus.component';
-import { AuthGuard } from './auth.guard';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './dashboard/header/header.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 import { HomeComponent } from './home/home.component';
-import { MainformComponent } from './mainform/mainform.component';
 import { PlacementsComponent } from './placements/placements.component';
 import { RegisterComponent } from './register/register.component';
 import { StudentloginComponent } from './studentlogin/studentlogin.component';
@@ -50,13 +47,13 @@ const routes: Routes =
     component: ForgotpassComponent
   },
   {
-    path: 'dashboard',
+    path: 'student',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'mainform',
-    component: MainformComponent
+    //canActivate: [AuthGuard]
+    children: [
+      {path:'header',
+        component: HeaderComponent}
+    ]
   },
   {
     path: 'changepassword',
